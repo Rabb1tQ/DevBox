@@ -1,0 +1,128 @@
+{
+  "name": "devbox",
+  "version": "0.1.0",
+  "private": true,
+  "main": "electron/main.js",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "electron:serve": "vue-cli-service serve && electron .",
+    "electron:build": "vue-cli-service build && electron-builder"
+  },
+  "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
+    "@types/diff": "^8.0.0",
+    "ant-design-vue": "^3.2.15",
+    "asn1js": "^3.0.5",
+    "codemirror": "5.65.15",
+    "core-js": "^3.8.3",
+    "cron-parser": "^4.7.1",
+    "cronstrue": "^2.21.0",
+    "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.7",
+    "diff": "^5.2.0",
+    "js-base64": "^3.7.7",
+    "js-sha256": "0.11.1",
+    "js-yaml": "^4.1.0",
+    "jsonpath": "^1.1.1",
+    "jsqr": "^1.4.0",
+    "pkijs": "^3.0.15",
+    "potrace": "^2.1.8",
+    "prettier": "^2.8.4",
+    "qrcode": "^1.5.3",
+    "sql-formatter": "^12.1.2",
+    "to-ico": "^1.1.5",
+    "uuid": "^9.0.0",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "webpack-bundle-analyzer": "^4.10.2",
+    "xml-js": "^1.6.11",
+    "zxcvbn": "^4.4.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "assert": "^2.1.0",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
+    "electron": "^23.1.0",
+    "electron-builder": "^24.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.5",
+    "webpack-bundle-analyzer": "^4.10.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "build": {
+    "appId": "com.devbox.app",
+    "productName": "DevBox",
+    "directories": {
+      "output": "dist_electron"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "public/favicon.ico"
+    ],
+    "extraResources": [],
+    "win": {
+      "target": ["nsis"],
+      "icon": "public/favicon.ico",
+      "executableName": "DevBox",
+      "requestedExecutionLevel": "asInvoker",
+      "artifactName": "${productName}-Setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "public/favicon.ico",
+      "uninstallerIcon": "public/favicon.ico",
+      "installerHeaderIcon": "public/favicon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "DevBox",
+      "include": "installer.nsh"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "public/favicon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "icon": "public/favicon.ico"
+    }
+  }
+}
+
