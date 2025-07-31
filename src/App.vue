@@ -1,36 +1,38 @@
 <template>
   <a-layout class="app-layout">
-    <a-layout-sider 
-      width="240" 
-      theme="light" 
-      breakpoint="lg" 
-      collapsible
+    <a-layout-sider
+        width="240"
+        theme="light"
+        breakpoint="lg"
+        collapsible
+        :collapsed="collapsed"
+        @collapse="onCollapse"
     >
-      <div class="logo">
+      <div class="logo" :class="{ 'logo-collapsed': collapsed }">
         <img src="./assets/logo.svg" alt="DevTools" />
-        <h1>开发者工具箱</h1>
+        <h1 v-show="!collapsed">开发者工具箱</h1>
       </div>
-      
-      <div class="search-box">
+
+      <div class="search-box" v-show="!collapsed">
         <a-input-search
-          v-model:value="searchText"
-          placeholder="搜索工具..."
-          @change="handleSearch"
-          allow-clear
+            v-model:value="searchText"
+            placeholder="搜索工具..."
+            @change="handleSearch"
+            allow-clear
         />
       </div>
-      
-      <a-menu 
-        mode="inline" 
-        :selected-keys="[selectedMenu]"
-        @select="handleMenuSelect"
+
+      <a-menu
+          mode="inline"
+          :selected-keys="[selectedMenu]"
+          @select="handleMenuSelect"
       >
         <template v-for="(group, groupName) in filteredMenuGroups" :key="groupName">
           <template v-if="group.routes.length > 0">
             <a-sub-menu :key="groupName" :title="group.title">
-              <a-menu-item 
-                v-for="route in group.routes" 
-                :key="route.path"
+              <a-menu-item
+                  v-for="route in group.routes"
+                  :key="route.path"
               >
                 {{ route.meta?.title || route.name || route.path.split('/').pop() }}
               </a-menu-item>
@@ -39,14 +41,8 @@
         </template>
       </a-menu>
     </a-layout-sider>
-    
+
     <a-layout>
-      <a-layout-header class="app-header">
-        <a-breadcrumb>
-          <a-breadcrumb-item>{{ currentPageTitle }}</a-breadcrumb-item>
-        </a-breadcrumb>
-      </a-layout-header>
-      
       <a-layout-content class="app-content">
         <router-view v-slot="{ Component }">
           <transition name="fade" mode="out-in">
@@ -54,7 +50,7 @@
           </transition>
         </router-view>
       </a-layout-content>
-      
+
       <a-layout-footer class="app-footer">
         开发者工具箱 © 2025 By Rabb1tQ
       </a-layout-footer>
@@ -73,9 +69,9 @@ export default {
   data() {
     return {
       selectedMenu: '',
-      currentPageTitle: '',
       menuGroups: this.generateMenuGroups(),
-      searchText: ''
+      searchText: '',
+      collapsed: false
     }
   },
   computed: {
@@ -110,7 +106,9 @@ export default {
         programming: { title: '编程通用', routes: [] },
         network: { title: '网络工具', routes: [] },
         image: { title: '图片处理', routes: [] },
-        security: { title: '安全工具', routes: [] }
+        security: { title: '安全工具', routes: [] },
+        edittools: { title: '文本处理', routes: [] }
+
       }
 
       router.options.routes.forEach(route => {
@@ -123,44 +121,41 @@ export default {
 
       return groups
     },
-    formatRouteName(path) {
-      const nameMap = {
-        '/programming/codec': '编解码工具',
-        '/programming/hash': '哈希生成器',
-        '/programming/uuid': 'UUID 生成器',
-        '/network/user-agent': 'User-Agent 解析',
-        '/network/ip-tools': 'IP 工具'
-      }
-      return nameMap[path] || path.split('/').pop()
-    },
     handleMenuSelect({ key }) {
       this.$router.push(key)
       this.selectedMenu = key
-      this.updatePageTitle(key)
-    },
-    updatePageTitle(route) {
-      this.currentPageTitle = this.formatRouteName(route)
     },
     handleSearch() {
-      // 搜索时自动展开所有菜单组
       this.$nextTick(() => {
         const subMenus = document.querySelectorAll('.ant-menu-submenu')
-        subMenus.forEach(menu => {
-          if (!menu.classList.contains('ant-menu-submenu-open')) {
-            menu.querySelector('.ant-menu-submenu-title').click()
-          }
-        })
+
+        if (this.searchText && this.searchText.trim()) {
+          // 有搜索内容时：展开所有菜单组
+          subMenus.forEach(menu => {
+            if (!menu.classList.contains('ant-menu-submenu-open')) {
+              menu.querySelector('.ant-menu-submenu-title').click()
+            }
+          })
+        } else {
+          // 没有搜索内容时：折叠所有菜单组
+          subMenus.forEach(menu => {
+            if (menu.classList.contains('ant-menu-submenu-open')) {
+              menu.querySelector('.ant-menu-submenu-title').click()
+            }
+          })
+        }
       })
+    },
+    onCollapse(collapsed) {
+      this.collapsed = collapsed
     }
   },
   created() {
     this.selectedMenu = this.$route.path
-    this.updatePageTitle(this.$route.path)
   },
   watch: {
     '$route.path'(newPath) {
       this.selectedMenu = newPath
-      this.updatePageTitle(newPath)
     }
   }
 }
@@ -176,29 +171,37 @@ export default {
   align-items: center;
   padding: 16px;
   background: white;
+  /*  transition: all 0.3s ease;  添加过渡效果 */
 }
 
 .logo img {
   height: 32px;
   margin-right: 12px;
+  /*  transition: margin 0.3s ease;  图片边距的过渡效果 */
 }
 
 .logo h1 {
   margin: 0;
   font-size: 18px;
   color: rgba(0, 0, 0, 0.85);
+  /*  transition: opacity 0.3s ease;  文字透明度的过渡效果 */
+}
+
+.logo-collapsed h1 {
+  display: none; /* 折叠时隐藏文字 */
+}
+
+.logo-collapsed {
+  justify-content: center; /* 折叠时图标居中 */
+  padding: 16px 0; /* 调整内边距 */
+}
+
+.logo-collapsed img {
+  margin-right: 0; /* 折叠时去掉右边距 */
 }
 
 .search-box {
   padding: 0 16px 16px;
-}
-
-.app-header {
-  background: white;
-  padding: 0 16px;
-  display: flex;
-  align-items: center;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 }
 
 .app-content {

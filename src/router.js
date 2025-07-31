@@ -180,6 +180,22 @@ const routes = [
       title: 'JWT 解码器',
       group: 'security'
     }
+  },
+  {
+    path: '/security/hash-analyzer',
+    component: () => import('./components/security/HashAnalyzer.vue'),
+    meta: {
+      title: '哈希分析器',
+      group: 'security'
+    }
+  },
+  {
+    path: '/edittools/winxin-edit',
+    component: () => import('./components/edittools/WeixinCodeFormatter.vue'),
+    meta: {
+      title: '公众号编辑器',
+      group: 'edittools'
+    }
   }
 ]
 

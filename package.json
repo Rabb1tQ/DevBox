@@ -31,6 +31,7 @@
     "potrace": "^2.1.8",
     "prettier": "^2.8.4",
     "qrcode": "^1.5.3",
+    "showdown": "^2.1.0",
     "sql-formatter": "^12.1.2",
     "to-ico": "^1.1.5",
     "uuid": "^9.0.0",
@@ -93,7 +94,9 @@
     ],
     "extraResources": [],
     "win": {
-      "target": ["nsis"],
+      "target": [
+        "nsis"
+      ],
       "icon": "public/favicon.ico",
       "executableName": "DevBox",
       "requestedExecutionLevel": "asInvoker",
@@ -125,4 +128,3 @@
     }
   }
 }
-
