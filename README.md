@@ -32,8 +32,8 @@ pnpm run serve
 # 构建生产版本
 pnpm run build
 
-# 构建electron 客户端
-pnpm run electron:build
+# 构建Tauri 客户端
+pnpm run tauri:build
 ```
 ## 功能模块
 
