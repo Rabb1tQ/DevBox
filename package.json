@@ -2,13 +2,13 @@
   "name": "devbox",
   "version": "0.1.0",
   "private": true,
-  "main": "electron/main.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "electron:serve": "vue-cli-service serve && electron .",
-    "electron:build": "vue-cli-service build && electron-builder"
+    "tauri": "tauri",
+    "tauri:dev": "vue-cli-service serve && tauri dev",
+    "tauri:build": "vue-cli-service build && tauri build"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
@@ -44,6 +44,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@tauri-apps/cli": "^2.8.1",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
@@ -51,8 +52,6 @@
     "assert": "^2.1.0",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
-    "electron": "^23.1.0",
-    "electron-builder": "^24.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "path-browserify": "^1.0.1",
@@ -80,51 +79,5 @@
     "last 2 versions",
     "not dead",
     "not ie 11"
-  ],
-  "build": {
-    "appId": "com.devbox.app",
-    "productName": "DevBox",
-    "directories": {
-      "output": "dist_electron"
-    },
-    "files": [
-      "dist/**/*",
-      "electron/**/*",
-      "public/favicon.ico"
-    ],
-    "extraResources": [],
-    "win": {
-      "target": [
-        "nsis"
-      ],
-      "icon": "public/favicon.ico",
-      "executableName": "DevBox",
-      "requestedExecutionLevel": "asInvoker",
-      "artifactName": "${productName}-Setup.${ext}"
-    },
-    "nsis": {
-      "oneClick": false,
-      "perMachine": false,
-      "allowToChangeInstallationDirectory": true,
-      "installerIcon": "public/favicon.ico",
-      "uninstallerIcon": "public/favicon.ico",
-      "installerHeaderIcon": "public/favicon.ico",
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "shortcutName": "DevBox",
-      "include": "installer.nsh"
-    },
-    "mac": {
-      "target": [
-        "dmg"
-      ],
-      "icon": "public/favicon.ico"
-    },
-    "linux": {
-      "target": [
-        "AppImage"
-      ],
-      "icon": "public/favicon.ico"
-    }
-  }
+  ]
 }
