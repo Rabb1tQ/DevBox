@@ -47,6 +47,7 @@ pnpm run tauri:build
   - XML 工具
   - YAML 工具
   - 文本对比
+  - 文本去重
   - 进制转换
   - UUID 生成器
 - 网络工具
