@@ -102,6 +102,14 @@ const routes = [
     }
   },
   {
+    path: '/programming/text-deduplicator',
+    component: () => import('./components/programming/TextDeduplicator.vue'),
+    meta: {
+      title: '文本去重',
+      group: 'programming'
+    }
+  },
+  {
     path: '/network/useragent',
     component: () => import('./components/network/UserAgentParser.vue'),
     meta: {
