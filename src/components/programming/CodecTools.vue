@@ -60,7 +60,10 @@
 <script>
 import { message } from 'ant-design-vue'
 import { encode as base64Encode, decode as base64Decode } from 'js-base64'
-import { md5, sha1, sha256, sha512 } from 'js-sha256'
+import { sha256 } from 'js-sha256'
+import { sha1 } from 'js-sha1'
+import { sha512 } from 'js-sha512'
+import CryptoJS from 'crypto-js'
 import he from 'he'
 import { Buffer } from 'buffer'
 
@@ -182,7 +185,7 @@ export default {
           decode: this.base32Decode
         },
         md5: {
-          encode: input => md5(input),
+          encode: input => CryptoJS.MD5(input).toString(),
           decode: () => 'MD5 不可解码'
         },
         sha1: {
