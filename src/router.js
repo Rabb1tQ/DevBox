@@ -110,6 +110,14 @@ const routes = [
     }
   },
   {
+    path: '/programming/ascii-art',
+    component: () => import('./components/programming/AsciiArt.vue'),
+    meta: {
+      title: 'ASCII Art 生成',
+      group: 'programming'
+    }
+  },
+  {
     path: '/network/useragent',
     component: () => import('./components/network/UserAgentParser.vue'),
     meta: {
